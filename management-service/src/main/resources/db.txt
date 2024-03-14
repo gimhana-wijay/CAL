@@ -1,0 +1,41 @@
+drop database cal_management;
+create database cal_management;
+use cal_management;
+
+CREATE TABLE employee_tax (
+    id INT AUTO_INCREMENT,
+    etf_fee DECIMAL(13, 2) NOT NULL,
+    full_epf_fee DECIMAL(13, 2) NOT NULL,
+    employer_epf_fee DECIMAL(13, 2) NOT NULL,
+    employee_epf_fee DECIMAL(13, 2) NOT NULL,
+    tax_fee_per_year DECIMAL(13, 2) NOT NULL,
+    tax_fee_per_month DECIMAL(13, 2) NOT NULL,
+    sports_fee DECIMAL(13, 2) NOT NULL,
+    stamp_fee DECIMAL(13, 2) NOT NULL,
+    company_total_cost DECIMAL(13, 2) NOT NULL,
+    employee_home_salary DECIMAL(13, 2) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE employee_finance (
+    id int AUTO_INCREMENT,
+    employee_tax_id int NOT NULL,
+    salary DECIMAL(13, 2) NOT NULL,
+    tax_enabled VARCHAR(1) NOT NULL,
+    etf_enabled VARCHAR(1) NOT NULL,
+    epf_enabled VARCHAR(1) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (employee_tax_id) REFERENCES employee_tax(id)
+);
+
+CREATE TABLE employee (
+    id INT AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    nic VARCHAR(100) NOT NULL,
+    address VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    mobile VARCHAR(100) NOT NULL,
+    employee_finance_id INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (employee_finance_id) REFERENCES employee_finance(id)
+);
